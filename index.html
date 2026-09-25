@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Anthony Stumpf | Cybersecurity Portfolio</title>
+<meta name="description" content="Anthony Stumpf: penetration tester, open-source security tool developer, and NCL Diamond-tier CTF competitor.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Source+Serif+4:opsz,wght@8..60,700&display=swap">
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#08090c; --bg-2:#0b0e15; --panel:#0e1117; --panel-2:#121722;
+  --line:#1d2330; --line-2:#2a3242;
+  --text:#f2f4f8; --muted:#9aa3b2; --dim:#6b7486;
+  --accent:#3b82f6; --accent-soft:rgba(59,130,246,.12); --accent-line:rgba(59,130,246,.35);
+  --ok:#22c55e; --warn:#f59e0b;
+  --serif:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --r:12px; --max:1160px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(900px 500px at 15% 10%,rgba(37,70,140,.18),transparent 60%),
+             radial-gradient(800px 600px at 90% 60%,rgba(30,58,120,.14),transparent 60%);}
+a{color:inherit}
+img{max-width:100%}
+h1,h2,h3{text-wrap:balance;margin:0}
+p{margin:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{position:relative;z-index:1;max-width:var(--max);margin:0 auto;padding-inline:24px}
+@media (max-width:600px){.wrap{padding-inline:16px}}
+
+/* ---------- header ---------- */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(8,9,12,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:20px;height:72px;max-width:1440px;margin:0 auto;padding-inline:24px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:700;font-size:18px;letter-spacing:.01em;flex-shrink:0}
+.brand-mark{display:grid;place-items:center;width:38px;height:38px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid var(--line-2)}
+nav.main{display:flex;align-items:center;gap:4px;margin-left:auto}
+nav.main a{position:relative;padding:8px 12px;font-size:14px;color:var(--muted);text-decoration:none;border-radius:6px;white-space:nowrap;transition:color .15s}
+nav.main a:hover{color:var(--text)}
+nav.main a.active{color:var(--accent)}
+nav.main a.active::after{content:"";position:absolute;left:10px;right:10px;bottom:-14px;height:2px;background:var(--accent);border-radius:2px}
+nav.main .sep{width:1px;height:28px;background:var(--line-2);margin:0 12px}
+.cta{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;font-weight:500;font-size:14px;padding:10px 22px;border-radius:7px;border:0;cursor:pointer;transition:background .15s}
+.cta:hover{background:#2f6fe0}
+.menu-btn{display:none;margin-left:auto;background:none;border:1px solid var(--line-2);color:var(--text);border-radius:8px;width:40px;height:40px;cursor:pointer}
+@media (max-width:1180px){
+  nav.main,.bar>.cta{display:none}
+  .menu-btn{display:grid;place-items:center}
+  nav.main.open{display:flex;flex-direction:column;align-items:stretch;position:absolute;top:72px;left:0;right:0;background:var(--bg-2);border-bottom:1px solid var(--line);padding:12px 16px 20px;gap:2px}
+  nav.main.open .sep{width:auto;height:1px;margin:8px 0}
+  nav.main.open a.active::after{display:none}
+  nav.main.open .cta-m{display:flex}
+}
+.cta-m{display:none;justify-content:center;margin-top:10px}
+
+/* ---------- shared ---------- */
+section{position:relative;z-index:1;border-top:1px solid var(--line);padding-block:96px}
+section:first-of-type{border-top:0}
+@media (max-width:600px){section{padding-block:64px}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font:600 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);padding:8px 14px;border-radius:999px}
+.eyebrow svg{width:14px;height:14px;flex-shrink:0}
+.eyebrow.plain{background:none;border:0;padding:0}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,.2)}
+.head{text-align:center;max-width:720px;margin:0 auto 56px;display:flex;flex-direction:column;align-items:center;gap:18px}
+.head h2{font-size:clamp(32px,4.5vw,46px);font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.head p{color:var(--muted);font-size:17px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r)}
+.icon{display:grid;place-items:center;width:48px;height:48px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid var(--line-2);color:var(--muted);flex-shrink:0}
+.icon.blue{background:var(--accent-soft);border-color:var(--accent-line);color:var(--accent)}
+.icon svg{width:22px;height:22px}
+.tag{display:inline-block;font-size:12.5px;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--line-2);padding:4px 10px;border-radius:6px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.badge{font:600 12px/1 var(--mono);color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--line-2);padding:7px 10px;border-radius:6px;white-space:nowrap}
+.grid{display:grid;gap:24px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:1000px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+/* ---------- hero ---------- */
+.hero{padding-block:110px 72px}
+.hero .wrap{max-width:1000px}
+.hero h1{font:700 clamp(52px,9vw,96px)/1.02 var(--serif);letter-spacing:-.015em;margin:32px 0 28px}
+.hero .lede{font-size:clamp(17px,2vw,20px);color:var(--muted);max-width:62ch;line-height:1.6}
+.stats{display:flex;flex-wrap:wrap;gap:14px;margin-top:40px}
+.stat{display:inline-flex;align-items:center;gap:10px;font-size:14.5px;padding:11px 16px;border-radius:8px;background:rgba(59,130,246,.05);border:1px solid rgba(59,130,246,.22)}
+.stat svg{width:16px;height:16px;color:var(--accent)}
+.actions{display:flex;flex-wrap:wrap;gap:18px;margin-top:52px}
+.btn{display:inline-flex;align-items:center;gap:12px;font-weight:600;font-size:15px;padding:14px 34px;border-radius:9px;text-decoration:none;cursor:pointer;transition:transform .15s,background .15s}
+.btn svg{width:17px;height:17px;transition:transform .15s}
+.btn:hover svg{transform:translateX(3px)}
+.btn.light{background:#f3f4f6;color:#0b0d12;border:1px solid #f3f4f6}
+.btn.ghost{background:transparent;color:var(--text);border:1.5px solid #4a5160}
+.btn.ghost:hover{border-color:#7a8394}
+.scroll-cue{display:flex;justify-content:center;margin-top:56px;color:var(--accent);opacity:.7}
+.hero h1,.hero .lede,.stats,.actions{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+.hero .lede{animation-delay:.08s}.stats{animation-delay:.16s}.actions{animation-delay:.24s}
+@keyframes rise{from{transform:translateY(14px)}to{transform:none}}
+
+/* focus cards */
+.focus{padding:24px;display:flex;flex-direction:column;gap:18px;transition:border-color .2s,transform .2s}
+.focus:hover{border-color:var(--accent-line);transform:translateY(-3px)}
+.focus .top{display:flex;justify-content:space-between;align-items:flex-start}
+.focus .chev{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.06);color:var(--muted)}
+.focus h3{font-size:19px;line-height:1.35}
+.focus p{color:var(--muted);font-size:14.5px;margin-top:8px}
+
+/* skills */
+.skill-group{padding:26px}
+.skill-group h3{display:flex;align-items:center;gap:12px;font-size:17px;margin-bottom:18px}
+.skill-group h3 .icon{width:38px;height:38px}
+.skill-group h3 .icon svg{width:18px;height:18px}
+
+/* timeline */
+.timeline{position:relative;max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+.timeline::before{content:"";position:absolute;left:23px;top:12px;bottom:-40px;width:2px;background:var(--line-2)}
+.t-item{display:grid;grid-template-columns:48px 1fr;gap:24px;align-items:start}
+.t-node{position:relative;z-index:1;display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:#1b1f28;border:3px solid #2b3140;color:var(--muted)}
+.t-node svg{width:18px;height:18px}
+.t-card{padding:30px 32px}
+.t-row{display:flex;justify-content:space-between;align-items:center;gap:16px;cursor:pointer;background:none;border:0;color:inherit;font:inherit;text-align:left;width:100%;padding:0}
+.t-row h3{font-size:clamp(19px,2.4vw,23px);letter-spacing:-.01em}
+.t-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:8px;color:var(--muted);font-size:15px}
+.t-meta .d{width:4px;height:4px;border-radius:50%;background:var(--dim)}
+.t-meta .badge{font-family:var(--sans);font-weight:400;font-size:12.5px}
+.t-toggle{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);color:var(--muted);flex-shrink:0;transition:transform .2s}
+.t-card.open .t-toggle{transform:rotate(180deg)}
+.t-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .25s}
+.t-card.open .t-body{grid-template-rows:1fr}
+.t-body>div{overflow:hidden}
+.t-body ul{margin:22px 0 0;padding:20px 0 0 18px;border-top:1px solid var(--line);color:var(--muted);display:flex;flex-direction:column;gap:8px}
+.t-body li::marker{color:var(--accent)}
+@media (max-width:600px){.t-item{grid-template-columns:1fr}.t-node,.timeline::before{display:none}.t-card{padding:22px}}
+
+/* certifications */
+.cert-head{display:flex;align-items:center;gap:14px;padding-bottom:22px;margin-bottom:32px;border-bottom:1px solid var(--line)}
+.cert-head h3{font-size:24px}
+.cert-head svg{width:24px;height:24px}
+.pill{font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px}
+.pill.ok{color:var(--ok);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3)}
+.pill.warn{color:var(--warn);background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3)}
+.cert{position:relative;overflow:hidden;padding:24px;display:flex;flex-direction:column;gap:6px}
+.cert::after{content:"";position:absolute;right:-60px;top:-60px;width:170px;height:170px;border-radius:50%;border:1px solid rgba(255,255,255,.04);box-shadow:0 0 0 22px rgba(255,255,255,.012),0 0 0 44px rgba(255,255,255,.01)}
+.cert .top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px}
+.cert h4{margin:0;font-size:18px}
+.cert .issuer{color:var(--muted);font-size:14.5px}
+.cert p{color:var(--dim);font-size:14.5px;margin-top:10px}
+.cert-block+.cert-block{margin-top:72px}
+
+/* projects */
+.proj{padding:24px;display:flex;flex-direction:column;gap:16px;background:linear-gradient(180deg,var(--panel-2),var(--panel));text-decoration:none;transition:border-color .2s,transform .2s}
+.proj:hover{border-color:var(--accent-line);transform:translateY(-3px)}
+.proj .top{display:flex;justify-content:space-between;align-items:flex-start}
+.proj .arrow{color:var(--muted);width:18px;height:18px}
+.proj h3{font-size:20px;line-height:1.35;margin-top:6px}
+.proj p{color:var(--muted);font-size:14.5px;flex:1}
+.proj .tags{padding-top:18px;border-top:1px solid var(--line)}
+
+/* contact */
+.contact{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7.5fr);gap:40px;max-width:1024px;margin:0 auto;align-items:start}
+@media (max-width:860px){.contact{grid-template-columns:1fr}}
+.c-info{padding:26px;background:linear-gradient(160deg,var(--panel-2),var(--panel))}
+.c-info h3{font-size:18px;margin-bottom:24px}
+.c-list{display:flex;flex-direction:column;gap:16px}
+.c-list a,.c-list span.c{display:flex;align-items:center;gap:16px;color:var(--muted);text-decoration:none;font-size:15px;word-break:break-word}
+.c-list a:hover{color:var(--text)}
+.c-list .icon{width:44px;height:44px;border:0;background:rgba(255,255,255,.06)}
+.c-list .icon svg{width:19px;height:19px}
+form{padding:32px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+form .full{grid-column:1/-1}
+@media (max-width:520px){form{grid-template-columns:1fr;padding:22px}}
+label{display:block;font-size:14.5px;font-weight:500;margin-bottom:10px}
+input,textarea{width:100%;font:inherit;font-size:15px;color:var(--text);background:#07080b;border:1px solid var(--line-2);border-radius:7px;padding:10px 16px}
+textarea{min-height:104px;resize:vertical}
+input::placeholder,textarea::placeholder{color:var(--dim)}
+input:focus,textarea:focus{outline:none;border-color:var(--accent)}
+form .btn{width:100%;justify-content:center}
+.form-note{font-size:14px;color:var(--muted);text-align:center}
+.form-note.ok{color:var(--ok)}
+
+footer{position:relative;z-index:1;border-top:1px solid var(--line);padding-block:40px;text-align:center;color:var(--muted);background:linear-gradient(90deg,#0e1420,#050608)}
+
+/* ---------- sub pages ---------- */
+.page-hero{text-align:center;display:flex;flex-direction:column;align-items:center;gap:22px;max-width:740px;margin:0 auto 64px}
+.page-hero .icon{border-radius:50%;width:52px;height:52px}
+.page-hero h1{font:700 clamp(38px,6vw,56px)/1.1 var(--serif);letter-spacing:-.01em}
+.page-hero p{color:var(--muted);font-size:18px}
+.page-hero .rule{width:96px;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--accent),#22d3ee)}
+.edu{display:grid;grid-template-columns:64px 1fr;gap:32px;padding:32px;max-width:896px;margin:0 auto}
+.edu+.edu{margin-top:32px}
+.edu .icon{width:64px;height:64px;color:var(--accent)}
+.edu .icon svg{width:30px;height:30px}
+.edu .top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.edu h2{font-size:24px}
+.edu .deg{color:var(--accent);font-size:18px;margin-top:10px}
+.edu .field{color:var(--muted);font-size:14.5px;margin-top:2px}
+.edu p.desc{color:var(--muted);margin-top:18px}
+.edu .kc{font:600 12px/1 var(--mono);letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin:24px 0 12px}
+.edu .badge{color:var(--text)}
+@media (max-width:600px){.edu{grid-template-columns:1fr;gap:18px;padding:22px}}
+.honors{max-width:896px;margin:64px auto 0}
+.honors h2{font-size:22px;margin-bottom:20px}
+.honor{display:flex;align-items:center;gap:16px;padding:18px 20px}
+.honor .icon{width:40px;height:40px;color:var(--accent)}
+
+.venture{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center}
+.venture+.venture{margin-top:96px}
+@media (max-width:900px){.venture{grid-template-columns:1fr;gap:32px}}
+.venture h2{font:700 clamp(34px,5vw,50px)/1.08 var(--serif);margin:22px 0 22px}
+.venture .lede{color:var(--muted);font-size:18px;line-height:1.65}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:32px}
+@media (max-width:480px){.feat{grid-template-columns:1fr}}
+.feat div{display:flex;align-items:center;gap:12px;font-size:14.5px;padding:12px 14px;border-radius:8px;background:rgba(255,255,255,.02);border:1px solid var(--line-2)}
+.feat svg{width:16px;height:16px;color:var(--accent);flex-shrink:0}
+.terminal{background:#05070a;border:1px solid var(--line-2);border-radius:14px;overflow:hidden;font:13.5px/1.75 var(--mono)}
+.terminal .tb{display:flex;gap:7px;padding:12px 14px;border-bottom:1px solid var(--line);background:#0b0e14}
+.terminal .tb i{width:11px;height:11px;border-radius:50%;background:#2a3140}
+.terminal pre{margin:0;padding:22px;color:#a9b4c6;white-space:pre-wrap;word-break:break-word}
+.terminal .p{color:var(--accent)}.terminal .g{color:var(--ok)}.terminal .y{color:var(--warn)}.terminal .r{color:#f87171}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:40px}
+@media (max-width:800px){.two{grid-template-columns:1fr}}
+.two .card{padding:32px}
+.two h3{font-size:22px;margin-bottom:18px}
+.two p{color:var(--muted)}
+.two p+p{margin-top:14px}
+.two ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px;color:var(--muted)}
+.two li{display:flex;gap:12px}
+.two li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);margin-top:10px;flex-shrink:0}
+
+.post{overflow:hidden;display:flex;flex-direction:column}
+.post .cover{position:relative;aspect-ratio:16/8;max-width:100%;background:
+  linear-gradient(135deg,rgba(59,130,246,.18),transparent 60%),
+  repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 22px),
+  repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 22px),#070a10;
+  display:grid;place-items:center;color:rgba(59,130,246,.55)}
+.post .cover svg{width:56px;height:56px}
+.post .cat{position:absolute;left:16px;top:16px;display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px}
+.post .body{padding:24px;display:flex;flex-direction:column;gap:14px;flex:1}
+.post .date{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:14px}
+.post .date svg{width:15px;height:15px;color:var(--accent)}
+.post h2{font-size:23px;line-height:1.35}
+.post p{color:var(--muted);flex:1}
+.post .more{padding-top:18px;border-top:1px solid var(--line);color:#60a5fa;font-weight:600;display:flex;align-items:center;gap:8px;text-decoration:none}
+.post .more.soon{color:var(--dim);font-weight:500}
+
+.vstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:32px}
+@media (max-width:700px){.vstats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.vstats .card{padding:22px;display:flex;flex-direction:column;gap:4px}
+.vstats b{font:700 36px/1 var(--serif);color:var(--text);font-variant-numeric:tabular-nums}
+.vstats span{color:var(--muted);font-size:14px}
+.quote{margin:32px 0 0;padding:36px 40px;border-left:0;background:linear-gradient(160deg,#101a2c,var(--panel))}
+@media (max-width:600px){.quote{padding:24px}}
+.quote blockquote{margin:0;font:600 clamp(19px,2.2vw,24px)/1.5 var(--serif);color:var(--text);text-wrap:pretty}
+.quote blockquote::before{content:"\201C";color:var(--accent);margin-right:2px}
+.quote blockquote::after{content:"\201D";color:var(--accent)}
+.quote figcaption{margin-top:20px;display:flex;flex-direction:column;gap:2px;font-size:14.5px}
+.quote figcaption span{color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head><body>
+
+<header>
+  <div class="bar">
+    <a class="brand" href="#home" data-link>
+      <span class="brand-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linejoin="round"><path d="M12 2 4 5.5v6c0 5 3.4 9.3 8 10.5 4.6-1.2 8-5.5 8-10.5v-6L12 2Z"/><path d="m12 8 1.2 2.6L16 12l-2.8 1.4L12 16l-1.2-2.6L8 12l2.8-1.4L12 8Z" fill="#3b82f6" stroke="none"/></svg></span>
+      <span id="brand-name"></span>
+    </a>
+    <nav class="main" id="nav" aria-label="Main"></nav>
+    <a class="cta" href="#contact">Get In Touch</a>
+    <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+
+<main id="app"></main>
+<footer><div class="wrap" id="footer"></div></footer>
+
+<script>
+/* =====================================================================
+   EDIT YOUR CONTENT HERE. Everything on the site is generated from this
+   object. Empty strings or empty arrays are hidden automatically.
+   ===================================================================== */
+const SITE = {
+  name: "Anthony Stumpf",
+  eyebrow: "Offensive Security & AI",
+  bio: "Cybersecurity professional and MS candidate in Cybersecurity and Information Assurance. I run formal penetration testing engagements for real clients, build open-source offensive tooling, and compete at Diamond tier in the National Cyber League. My focus is where artificial intelligence meets offensive security.",
+  stats: [
+    ["award", "9 Industry Certifications"],
+    ["trophy", "NCL Diamond, 6 Seasons"],
+    ["crosshair", "Critical Finding in Client Pentest"],
+    ["cap", "MSCSIA, Jan 2027"]
+  ],
+  contact: {
+    email: "",                       // e.g. "you@example.com"
+    linkedin: "https://www.linkedin.com/in/anthony-stumpf",
+    github: "https://github.com/Nemorous",
+    medium: "https://medium.com/@smohrwz",
+    website: "https://anthony.stumpf.ninja",
+    formEndpoint: ""                 // e.g. a Formspree URL; leave empty to disable sending
+  },
+  contactBlurb: "Open to penetration testing engagements, AI security work, and roles in offensive security.",
+
+  focus: [
+    ["target", "Penetration Testing", "Scoped client engagements covering web apps, APIs, and infrastructure, with reproducible findings and clear remediation."],
+    ["bot", "AI & LLM Security", "Agentic frameworks for automated recon and scanning, plus adversarial testing of LLM features."],
+    ["key", "Password Cracking", "Hashcat automation and targeted wordlist engineering, refined across six NCL seasons."],
+    ["radar", "Monitoring & Response", "Security event monitoring, log analysis, alert investigation, and incident triage."]
+  ],
+
+  skills: [
+    ["target", "Offensive", ["Penetration Testing", "Vulnerability Assessment", "Web Exploitation", "Privilege Escalation", "LLM Adversarial Testing", "Password Cracking"]],
+    ["terminal", "Security Tools", ["Kali Linux", "Metasploit", "Nmap", "Nessus", "Wireshark", "Splunk", "Hashcat"]],
+    ["radar", "Monitoring & Response", ["Security Event Monitoring", "Incident Triage", "Log Analysis", "Alert Investigation"]],
+    ["network", "Networking & Systems", ["TCP/IP", "DNS", "Windows Administration", "Linux Administration", "Active Directory"]],
+    ["file", "Programming & Scripting", ["Python", "Bash", "PowerShell", "MySQL"]],
+    ["search", "CTF Specialties", ["Network Forensics", "Cryptography", "Reverse Engineering", "Steganography"]]
+  ],
+
+  // when: leave "" if you don't want a date shown
+  experience: [
+    { icon: "shield", role: "Founder / IT & Security Lead", org: "Knight Light Games LLC", when: "Jan 2019 – Present",
+      points: ["Founded and operate Knight Light AI Security, an independent consulting practice running formal penetration tests for real clients.",
+               "Assessed ListenToSee's SaaS platform and uncovered a critical Supabase RLS privilege escalation, plus additional findings.",
+               "Integrated AI agentic frameworks into pentest workflows for automated reconnaissance and vulnerability scanning at scale.",
+               "Built client-facing tools, internal automation, and reporting infrastructure, and managed scoping, timelines, and deliverables.",
+               "Published two open-source security tools, Wordreaper and ZombieCrack, used by the security and CTF community."] },
+    { icon: "users", role: "President", org: "WGU Cyber Club", when: "Current",
+      points: ["Lead the graduate-level cybersecurity student organization, organizing events, resources, and community engagement."] },
+    { icon: "users", role: "President", org: "Moorpark College Cybersecurity Club", when: "",
+      points: ["Led an institution-funded initiative that sent 12 students to DEF CON, covering tickets, travel, hotel, and meals.",
+               "The trip has since become an annual tradition at the college."] },
+    { icon: "network", role: "Field Technician II", org: "Spectrum", when: "May 2018 – Nov 2018",
+      points: ["Installed, repaired, and maintained cable, internet, and phone services.",
+               "Resolved technical issues on site and worked with other technicians on complex problems."] },
+    { icon: "briefcase", role: "Store Manager", org: "Moldavon Inc / Pet Life", when: "Feb 2014 – May 2018",
+      points: ["Monitored security and handled incidents calmly and professionally.",
+               "Managed cash handling, bank deposits, and inventory reordering."] },
+    { icon: "monitor", role: "Computer Technician", org: "BSC Services, LLC", when: "Mar 2010 – Feb 2014",
+      points: ["Maintained computer systems, installed operating systems and software, and connected machines to networks and peripherals.",
+               "Trained users on hardware and software and provided after-hours support."] }
+  ],
+
+  // year: badge text, leave "" to hide it
+  certs: [
+    ["crosshair", "PenTest+ ce", "CompTIA", "Valid to 2029", "Penetration testing and vulnerability assessment, from scoping through exploitation and reporting."],
+    ["radar", "CySA+ ce", "CompTIA", "Valid to 2029", "Behavioral analytics, threat detection, and security operations."],
+    ["shield", "Security+ ce", "CompTIA", "Valid to 2028", "Core cybersecurity skills for infrastructure and operations roles."],
+    ["network", "Network+ ce", "CompTIA", "Valid to 2028", "Designing, running, and troubleshooting wired and wireless networks."],
+    ["monitor", "A+ ce", "CompTIA", "Valid to 2028", "Hardware, software, and operating system support."],
+    ["clipboard", "Project+ ce", "CompTIA", "Valid to 2028", "Planning, running, and closing out projects across their lifecycle."],
+    ["badge", "Secure Infrastructure Specialist", "CompTIA CSIS", "Valid to 2028", "Stackable certification earned with Security+, Network+, and A+."],
+    ["badge", "IT Operations Specialist", "CompTIA CIOS", "Valid to 2028", "Stackable certification earned with Network+ and A+."],
+    ["badge", "Associate of ISC2", "ISC2", "", "Recognized ISC2 associate working toward full certification."]
+  ],
+  certsInProgress: [
+    // ["target", "Cert name", "Issuer", "Expected 2027", "Short description"]
+  ],
+
+  projects: [
+    { icon: "file", title: "Wordreaper", url: "https://github.com/Nemorous/wordreaper",
+      desc: "Open-source web scraper that builds targeted wordlists for password attacks. Close to 50 GitHub stars, with outside contributors and a community-driven roadmap.",
+      tags: ["Python", "Web Scraping", "Wordlists", "Open Source"] },
+    { icon: "key", title: "ZombieCrack", url: "https://github.com/Nemorous",
+      desc: "Automated password-cracking tool built around hashcat for fast results in CTF competitions.",
+      tags: ["Hashcat", "Automation", "CTF"] }
+  ],
+
+  education: [
+    { icon: "cap", school: "Western Governors University", degree: "Master of Science", field: "Cybersecurity and Information Assurance", when: "Expected Jan 2027",
+      desc: "Graduate program in secure architecture, secure software, and security governance. Enrolled August 2026 and on track for on-time completion.", coursework: ["Secure Network Design (D482) ✓", "Secure Software Design (D487)", "Governance, Risk, and Compliance (D486)"] },
+    { icon: "shield", school: "Western Governors University", degree: "Bachelor of Science", field: "Cybersecurity and Information Assurance", when: "June 2026",
+      desc: "Passed every objective and performance assessment and every CompTIA exam on the first attempt, with no revisions required.", coursework: [] },
+    { icon: "book", school: "Moorpark College", degree: "Associate of Science", field: "Cybersecurity  ·  GPA 3.5", when: "",
+      desc: "Served as president of the campus cybersecurity club and started its annual DEF CON trip.", coursework: [] },
+    { icon: "network", school: "Moorpark College", degree: "Associate of Science", field: "Computer Network Systems Engineering  ·  GPA 3.5", when: "",
+      desc: "Networking, systems administration, and infrastructure fundamentals.", coursework: [] }
+  ],
+  honors: [
+    "Excellence Award, Legal Issues in Information Security (WGU)",
+    "Order of the Sword and Shield",
+    "National Society of Leadership and Success",
+    "NCL Diamond Tier, 95th–99th percentile, 6 consecutive seasons (Individual and Team)",
+    "First-attempt pass on every WGU assessment and CompTIA exam",
+    "Recommended for future pentest work by ListenToSee, Inc."
+  ],
+
+  ventures: [
+    { eyebrow: "Consulting Practice", title: "Knight Light AI Security",
+      lede: "Formal penetration testing for real-world clients, run under Knight Light Games LLC. AI agents handle reconnaissance and scanning at scale, and every finding is reproduced and written up by hand.",
+      features: [["target", "Web App & API Testing"], ["bot", "LLM Adversarial Testing"], ["key", "Access Control Review"], ["file", "Remediation Reports"]],
+      terminal: true,
+      left: ["How It Works", ["Signed agreement covering scope, rules of engagement, and confidentiality.", "Automated recon and enumeration with AI agentic tooling.", "Manual exploitation and verification to rule out false positives.", "Critical findings escalated within 24 hours.", "Full report with reproduction steps and precise remediation guidance."]],
+      right: ["Case Study: LearningNuggets", ["One of three testers on a March 30 to April 6, 2026 engagement against ListenToSee's adaptive cybersecurity tutoring platform, covering its AI tutor, containerized labs, and full application and infrastructure surface.", "The report documented 10 findings: 1 Critical, 4 Medium, 1 Low, and 4 Informational. The critical issue was a Supabase row-level security misconfiguration that let any authenticated user promote themselves to administrator.", "The team also ran 16 jailbreak and prompt injection vectors against the AI tutor. All Critical and Medium findings were fixed, and the fixes were verified on April 17, 2026."]],
+      quote: ["Their findings materially improved the security posture of the LearningNuggets platform before broader student deployment, and their conduct throughout was consistent with the standards I expect of senior offensive-security practitioners.", "Scott Young", "President, ListenToSee, Inc."],
+      stats: [["10", "Findings"], ["1", "Critical"], ["16", "LLM attack vectors"], ["12", "Controls validated"]] },
+    { eyebrow: "Company", title: "Knight Light Games LLC",
+      lede: "Founded in January 2019 in Thousand Oaks, California. Knight Light Games is the company behind Knight Light AI Security and Anthony's independent projects.",
+      features: [], terminal: false, left: null, right: null, quote: null, stats: [] }
+  ],
+
+  // status: "" for published, or "Coming soon"
+  writeups: [
+    { cat: "CTF", date: "November 29, 2025", status: "", title: "NCL [Hard] Password Challenge: Disney Characters and Advanced Wordreaper Techniques",
+      desc: "Working through the hardest NCL password challenge with advanced Wordreaper techniques, themed wordlists, and a lot of hashcat time.",
+      url: "https://medium.com/@smohrwz/ncl-hard-password-challenge-disney-characters-and-advanced-wordreaper-techniques-79e1dd1ff481" },
+    { cat: "CTF", date: "November 24, 2025", status: "", title: "NCL Password Challenges: How to Scrape Themed Wordlists with Wordreaper",
+      desc: "A guide to generating themed wordlists quickly for password challenges, without building them by hand.",
+      url: "https://medium.com/@smohrwz/ncl-password-challenges-how-to-scrape-themed-wordlists-with-wordreaper-81f81c008801" }
+  ],
+
+  footer: "Built by Anthony Stumpf."
+};
+
+/* ---------------------------- icons ---------------------------- */
+const P = {
+  award:'<circle cx="12" cy="8" r="6"/><path d="M15.5 13 17 22l-5-3-5 3 1.5-9"/>',
+  trophy:'<path d="M6 9H4a2 2 0 0 1 0-4h2M18 9h2a2 2 0 0 0 0-4h-2M6 3h12v6a6 6 0 0 1-12 0V3ZM9 21h6M12 15v6"/>',
+  star:'<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/>',
+  cap:'<path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/>',
+  target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+  bot:'<rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 4v4M9 13v2M15 13v2M2 14h2M20 14h2"/>',
+  key:'<circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.8-9.8M16 7l3 3M18.5 4.5l2 2"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',
+  terminal:'<path d="m4 17 6-6-6-6M12 19h8"/>',
+  gamepad:'<rect x="2" y="6" width="20" height="12" rx="4"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/>',
+  users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
+  crosshair:'<circle cx="12" cy="12" r="10"/><path d="M22 12h-4M6 12H2M12 6V2M12 22v-4"/>',
+  radar:'<path d="M19.1 4.9A10 10 0 1 0 22 12"/><path d="M16.2 7.8A6 6 0 1 0 18 12"/><circle cx="12" cy="12" r="2"/><path d="m13.4 10.6 5.7-5.7"/>',
+  shield:'<path d="M12 22c4.6-1.2 8-5.5 8-10.5v-6L12 2 4 5.5v6C4 16.5 7.4 20.8 12 22Z"/><path d="m9 12 2 2 4-4"/>',
+  network:'<rect x="9" y="2" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/><path d="M5 16v-3h14v3M12 8v5"/>',
+  monitor:'<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>',
+  clipboard:'<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2M9 14l2 2 4-4"/>',
+  badge:'<path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/>',
+  file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6Z"/><path d="M14 2v6h6M8 13h8M8 17h5"/>',
+  radio:'<path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9M7.8 16.2a6 6 0 0 1 0-8.4M16.2 7.8a6 6 0 0 1 0 8.4M19.1 4.9c3.9 3.9 3.9 10.3 0 14.2"/><circle cx="12" cy="12" r="2"/>',
+  book:'<path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2V4ZM22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7V4Z"/>',
+  arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+  arrowUR:'<path d="M7 17 17 7M8 7h9v9"/>',
+  chevR:'<path d="m9 6 6 6-6 6"/>', chevD:'<path d="m6 9 6 6 6-6"/>',
+  check:'<circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/>',
+  clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+  briefcase:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+  mail:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>',
+  linkedin:'<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6ZM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/>',
+  github:'<path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4M9 18c-4.51 2-5-2-7-2"/>',
+  globe:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20Z"/>',
+  send:'<path d="m22 2-7 20-4-9-9-4 20-7ZM22 2 11 13"/>',
+  cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+  tag:'<path d="M12 2H2v10l9.3 9.3a1 1 0 0 0 1.4 0l8.6-8.6a1 1 0 0 0 0-1.4L12 2Z"/><circle cx="7" cy="7" r="1.5"/>',
+  medal:'<circle cx="12" cy="15" r="6"/><path d="M8.2 10.3 5 2h4l3 6 3-6h4l-3.2 8.3"/>',
+  rocket:'<path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9a2.2 2.2 0 0 0-2.9-.1ZM12 15l-3-3a22 22 0 0 1 2-3.9A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22 22 0 0 1-4 2Z"/><path d="M9 12H4s.6-3 2-4c1.6-1.1 5 0 5 0M12 15v5s3-.6 4-2c1.1-1.6 0-5 0-5"/>'
+};
+const ic = (n, cls = "") => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n] || P.shield}</svg>`;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const ext = u => `href="${esc(u)}" target="_blank" rel="noopener"`;
+
+/* ---------------------------- nav ---------------------------- */
+const PAGES = { education: "Education", ventures: "Ventures", writeups: "Writeups" };
+const HOME_LINKS = [["home", "Home"], ["skills", "Skills"], ["certifications", "Certifications"], ["projects", "Projects"], ["experience", "Experience"]];
+function renderNav(current) {
+  const home = HOME_LINKS.map(([id, t]) => `<a href="#${id}" class="${current === "home" && id === "home" ? "" : ""}">${t}</a>`).join("");
+  const pages = Object.entries(PAGES).map(([id, t]) => `<a href="#${id}" class="${current === id ? "active" : ""}">${t}</a>`).join("");
+  document.getElementById("nav").innerHTML = home + `<span class="sep"></span>` + pages + `<a class="cta cta-m" href="#contact">Get In Touch</a>`;
+}
+
+/* ---------------------------- home ---------------------------- */
+const head = (eb, icon, title, sub, plain) => `<div class="head">${eb ? `<span class="eyebrow ${plain ? "plain" : ""}">${icon ? ic(icon) : ""}${eb}</span>` : ""}<h2>${title}</h2>${sub ? `<p>${sub}</p>` : ""}</div>`;
+const certCard = ([icon, name, issuer, year, desc], warn) => `
+  <div class="card cert"><div class="top"><span class="icon">${ic(icon)}</span>${year ? `<span class="badge" ${warn ? 'style="color:var(--warn);border-color:rgba(245,158,11,.3)"' : ""}>${esc(year)}</span>` : ""}</div>
+  <h4>${esc(name)}</h4><div class="issuer">${esc(issuer)}</div><p>${esc(desc)}</p></div>`;
+
+function homeView() {
+  const S = SITE;
+  return `
+  <section class="hero" id="home"><div class="wrap">
+    <span class="eyebrow"><span class="dot"></span>${esc(S.eyebrow)}</span>
+    <h1>${esc(S.name)}</h1>
+    <p class="lede">${esc(S.bio)}</p>
+    <div class="stats">${S.stats.map(([i, t]) => `<span class="stat">${ic(i)}${esc(t)}</span>`).join("")}</div>
+    <div class="actions">
+      <a class="btn light" href="#projects">View My Work ${ic("arrow")}</a>
+      <a class="btn ghost" href="#contact">Get In Touch ${ic("arrow")}</a>
+    </div>
+    <div class="scroll-cue">${ic("chevD").replace("<svg", '<svg width="22" height="22"')}</div>
+  </div></section>
+
+  <section id="focus"><div class="wrap">
+    ${head("", "", "Professional Focus", "Client engagements, open-source tooling, and six seasons of competition, all aimed at finding weaknesses before someone else does.")}
+    <div class="grid g4">${S.focus.map(([i, t, d]) => `
+      <div class="card focus"><div class="top"><span class="icon">${ic(i)}</span><span class="chev">${ic("chevR").replace("<svg", '<svg width="16" height="16"')}</span></div>
+      <div><h3>${esc(t)}</h3><p>${esc(d)}</p></div></div>`).join("")}</div>
+  </div></section>
+
+  <section id="skills"><div class="wrap">
+    ${head("Toolkit", "terminal", "Technical Skills", "The tools and techniques behind client engagements, CTF finishes, and open-source work.")}
+    <div class="grid g3">${S.skills.map(([i, t, list]) => `
+      <div class="card skill-group"><h3><span class="icon blue">${ic(i)}</span>${esc(t)}</h3>
+      <div class="tags">${list.map(x => `<span class="tag">${esc(x)}</span>`).join("")}</div></div>`).join("")}</div>
+  </div></section>
+
+  <section id="experience"><div class="wrap">
+    ${head("Career Journey", "briefcase", "Professional Experience", "More than fifteen years in IT, from bench technician to running a penetration testing practice.")}
+    <div class="timeline">${S.experience.map((e, n) => `
+      <div class="t-item"><span class="t-node">${ic(e.icon)}</span>
+        <div class="card t-card ${n === 0 ? "open" : ""}">
+          <button class="t-row" aria-expanded="${n === 0}"><div><h3>${esc(e.role)}</h3>
+            <div class="t-meta"><span>${esc(e.org)}</span>${e.when ? `<span class="d"></span><span class="badge">${esc(e.when)}</span>` : ""}</div></div>
+            <span class="t-toggle">${ic("chevD").replace("<svg", '<svg width="16" height="16"')}</span></button>
+          <div class="t-body"><div><ul>${e.points.map(p => `<li>${esc(p)}</li>`).join("")}</ul></div></div>
+        </div></div>`).join("")}</div>
+  </div></section>
+
+  <section id="certifications"><div class="wrap">
+    ${head("Qualifications", "award", "Industry Certifications", "Validated expertise across penetration testing, security analysis, networking, and IT operations.")}
+    <div class="cert-block">
+      <div class="cert-head"><span style="color:var(--ok)">${ic("check")}</span><h3>Completed Certifications</h3><span class="pill ok">${S.certs.length} Achieved</span></div>
+      <div class="grid g3">${S.certs.map(c => certCard(c)).join("")}</div>
+    </div>
+    ${S.certsInProgress.length ? `<div class="cert-block">
+      <div class="cert-head"><span style="color:var(--warn)">${ic("clock")}</span><h3>In Progress</h3><span class="pill warn">Currently Pursuing</span></div>
+      <div class="grid g3">${S.certsInProgress.map(c => certCard(c, true)).join("")}</div></div>` : ""}
+  </div></section>
+
+  <section id="projects"><div class="wrap">
+    ${head("Portfolio", "", "Tools &amp; Projects", "Open-source password-cracking tools built for CTF competition and used by the security community.", true)}
+    <div class="grid ${S.projects.length % 3 === 0 ? "g3" : "g2"}" style="${S.projects.length % 3 ? "max-width:900px;margin:0 auto" : ""}">${S.projects.map(p => `
+      <${p.url ? `a ${ext(p.url)}` : "div"} class="card proj">
+        <div class="top"><span class="icon blue">${ic(p.icon)}</span>${p.url ? ic("arrowUR", "arrow") : ""}</div>
+        <h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p>
+        <div class="tags">${p.tags.map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
+      </${p.url ? "a" : "div"}>`).join("")}</div>
+  </div></section>
+
+  ${contactView()}`;
+}
+
+function contactView() {
+  const c = SITE.contact;
+  const rows = [
+    c.email && `<span class="c"><span class="icon">${ic("mail")}</span>${esc(c.email)}</span>`,
+    c.linkedin && `<a ${ext(c.linkedin)}><span class="icon">${ic("linkedin")}</span>LinkedIn Profile</a>`,
+    c.github && `<a ${ext(c.github)}><span class="icon">${ic("github")}</span>GitHub: ${esc(c.github.split("/").pop())}</a>`,
+    c.medium && `<a ${ext(c.medium)}><span class="icon">${ic("book")}</span>Medium Articles</a>`,
+    c.website && `<a ${ext(c.website)}><span class="icon">${ic("globe")}</span>${esc(c.website.replace(/^https?:\/\//, ""))}</a>`
+  ].filter(Boolean).join("");
+  return `<section id="contact"><div class="wrap">
+    ${head("Connect", "", "Get In Touch", esc(SITE.contactBlurb), true)}
+    <div class="contact">
+      <div class="card c-info"><h3>Contact Information</h3><div class="c-list">${rows}</div></div>
+      <form class="card" id="contact-form" novalidate>
+        <div><label for="f-first">First Name</label><input id="f-first" name="first" placeholder="Jane" required></div>
+        <div><label for="f-last">Last Name</label><input id="f-last" name="last" placeholder="Doe"></div>
+        <div class="full"><label for="f-email">Email Address</label><input id="f-email" name="email" type="email" placeholder="jane@example.com" required></div>
+        <div class="full"><label for="f-msg">Message</label><textarea id="f-msg" name="message" placeholder="What are you looking to test?" required></textarea></div>
+        <div class="full"><button class="btn light" type="submit">Send Message ${ic("send")}</button></div>
+        <p class="full form-note" id="form-note" hidden></p>
+      </form>
+    </div></div></section>`;
+}
+
+/* ---------------------------- sub pages ---------------------------- */
+function educationView() {
+  const S = SITE;
+  return `<section><div class="wrap">
+    <div class="page-hero"><span class="icon blue">${ic("cap")}</span><h1>Academic Foundation</h1>
+      <p>Degrees in cybersecurity and networking, backed by certifications, competition, and club leadership.</p></div>
+    ${S.education.map(e => `<div class="card edu"><span class="icon">${ic(e.icon)}</span><div>
+      <div class="top"><h2>${esc(e.school)}</h2>${e.when ? `<span class="badge" style="color:var(--text)">${esc(e.when)}</span>` : ""}</div>
+      <div class="deg">${esc(e.degree)}</div>${e.field ? `<div class="field">${esc(e.field)}</div>` : ""}
+      <p class="desc">${esc(e.desc)}</p>
+      ${e.coursework.length ? `<div class="kc">Key Coursework</div><div class="tags">${e.coursework.map(x => `<span class="badge">${esc(x)}</span>`).join("")}</div>` : ""}
+    </div></div>`).join("")}
+    ${S.honors.length ? `<div class="honors"><h2>Honors &amp; Recognition</h2><div class="grid g3">${S.honors.map(h => `<div class="card honor"><span class="icon">${ic("medal")}</span>${esc(h)}</div>`).join("")}</div></div>` : ""}
+  </div></section>`;
+}
+
+function venturesView() {
+  return `<section><div class="wrap">${SITE.ventures.map(v => `
+    <div class="venture-wrap">
+      <div class="venture">
+        <div><span class="eyebrow">${ic("rocket")}${esc(v.eyebrow)}</span><h2>${esc(v.title)}</h2><p class="lede">${esc(v.lede)}</p>
+          ${v.features.length ? `<div class="feat">${v.features.map(([i, t]) => `<div>${ic(i)}${esc(t)}</div>`).join("")}</div>` : ""}</div>
+        ${v.terminal ? `<div><div class="terminal" aria-label="Illustrative agent output"><div class="tb"><i></i><i></i><i></i></div><pre><span class="p">phantom@kali</span>:~$ phantom run --scope client.yml
+<span class="g">[+]</span> scope loaded: 3 targets, rules of engagement ok
+<span class="g">[+]</span> recon: 41 endpoints, 2 auth flows mapped
+<span class="y">[~]</span> testing access control on /rest/v1/*
+<span class="r">[!]</span> CRITICAL  RLS gap: authenticated user can
+    set own role=admin via REST
+<span class="g">[+]</span> finding queued for manual verification
+<span class="p">phantom@kali</span>:~$ <span style="animation:blink 1s steps(1) infinite">█</span></pre></div><p style="margin-top:10px;font-size:13px;color:var(--dim)">Illustrative output, not a capture from a client engagement.</p></div>`
+          : `<div class="card" style="padding:40px;display:grid;place-items:center;color:var(--accent)">${ic("gamepad").replace("<svg", '<svg width="72" height="72"')}</div>`}
+      </div>
+      ${v.left ? `<div class="two"><div class="card"><h3>${esc(v.left[0])}</h3><ul>${v.left[1].map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
+        <div class="card" style="background:linear-gradient(160deg,#131c2e,var(--panel))"><h3>${esc(v.right[0])}</h3>${v.right[1].map(x => `<p>${esc(x)}</p>`).join("")}</div></div>` : ""}
+      ${v.stats && v.stats.length ? `<div class="vstats">${v.stats.map(([n, l]) => `<div class="card"><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join("")}</div>` : ""}
+      ${v.quote ? `<figure class="card quote"><blockquote>${esc(v.quote[0])}</blockquote><figcaption><b>${esc(v.quote[1])}</b><span>${esc(v.quote[2])}</span></figcaption></figure>` : ""}
+    </div>`).join('<div style="height:96px"></div>')}</div></section>
+    <style>@keyframes blink{50%{opacity:0}}</style>`;
+}
+
+function writeupsView() {
+  return `<section><div class="wrap">
+    <div class="page-hero"><h1 style="font-family:var(--sans);letter-spacing:-.02em">Writeups &amp; <span style="color:#60a5fa">Research</span></h1><span class="rule"></span>
+      <p>CTF writeups and technical guides, published on Medium.</p></div>
+    <div class="grid g2" style="max-width:1024px;margin:0 auto">${SITE.writeups.map(w => `
+      <article class="card post"><div class="cover"><span class="cat">${ic("tag").replace("<svg", '<svg width="12" height="12"')}${esc(w.cat)}</span>${ic(w.cat === "CTF" ? "trophy" : "shield")}</div>
+        <div class="body">${w.date || w.status ? `<div class="date">${ic("cal")}${esc(w.date || w.status)}</div>` : ""}
+          <h2>${esc(w.title)}</h2><p>${esc(w.desc)}</p>
+          ${w.url ? `<a class="more" ${ext(w.url)}>Read Article ${ic("arrow").replace("<svg", '<svg width="16" height="16"')}</a>` : `<span class="more soon">In progress</span>`}</div>
+      </article>`).join("")}</div>
+  </div></section>`;
+}
+
+/* ---------------------------- router ---------------------------- */
+const app = document.getElementById("app");
+let currentPage = null;
+function route() {
+  const h = (location.hash || "#home").slice(1);
+  const page = PAGES[h] ? h : "home";
+  if (page !== currentPage) {
+    currentPage = page;
+    app.innerHTML = page === "education" ? educationView() : page === "ventures" ? venturesView() : page === "writeups" ? writeupsView() : homeView();
+    renderNav(page);
+    bind();
+  }
+  document.getElementById("nav").classList.remove("open");
+  if (page === "home" && h !== "home") {
+    const el = document.getElementById(h);
+    if (el) requestAnimationFrame(() => el.scrollIntoView());
+  } else window.scrollTo(0, 0);
+}
+function bind() {
+  document.querySelectorAll(".t-row").forEach(b => b.addEventListener("click", () => {
+    const card = b.closest(".t-card"); card.classList.toggle("open");
+    b.setAttribute("aria-expanded", card.classList.contains("open"));
+  }));
+  const f = document.getElementById("contact-form");
+  if (f) f.addEventListener("submit", async ev => {
+    ev.preventDefault();
+    const note = document.getElementById("form-note");
+    note.hidden = false; note.className = "full form-note";
+    if (!f.checkValidity()) { note.textContent = "Add your first name, a valid email, and a message, then send again."; return; }
+    const ep = SITE.contact.formEndpoint;
+    if (!ep) { note.textContent = "The contact form isn't connected yet. Use the links on the left to reach out."; return; }
+    try {
+      const r = await fetch(ep, { method: "POST", headers: { Accept: "application/json" }, body: new FormData(f) });
+      if (!r.ok) throw 0;
+      f.reset(); note.className = "full form-note ok"; note.textContent = "Message sent. I'll get back to you soon.";
+    } catch { note.textContent = "Sending failed. Check your connection or use the links on the left."; }
+  });
+}
+document.getElementById("brand-name").textContent = SITE.name;
+document.getElementById("footer").textContent = `© ${new Date().getFullYear()} ${SITE.footer}`;
+document.getElementById("menu-btn").addEventListener("click", e => {
+  const n = document.getElementById("nav"); n.classList.toggle("open");
+  e.currentTarget.setAttribute("aria-expanded", n.classList.contains("open"));
+});
+addEventListener("hashchange", route);
+route();
+</script>
+</body></html>
