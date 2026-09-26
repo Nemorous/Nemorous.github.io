@@ -3,6 +3,20 @@
 <title>Anthony Stumpf | Cybersecurity Portfolio</title>
 <meta name="description" content="Anthony Stumpf: penetration tester, open-source security tool developer, and NCL Diamond-tier CTF competitor.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Anthony Stumpf">
+<meta property="og:title" content="Anthony Stumpf | Offensive Security &amp; AI">
+<meta property="og:description" content="Penetration tester, open-source tool developer, and NCL Diamond-tier CTF competitor. PenTest+, CySA+, Security+.">
+<meta property="og:url" content="https://nemorous.github.io/">
+<meta property="og:image" content="https://nemorous.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Anthony Stumpf, Offensive Security and AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Anthony Stumpf | Offensive Security &amp; AI">
+<meta name="twitter:description" content="Penetration tester, open-source tool developer, and NCL Diamond-tier CTF competitor.">
+<meta name="twitter:image" content="https://nemorous.github.io/og.png">
+<meta name="theme-color" content="#08090c">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Source+Serif+4:opsz,wght@8..60,700&display=swap">
@@ -94,6 +108,7 @@ section:first-of-type{border-top:0}
 .btn{display:inline-flex;align-items:center;gap:12px;font-weight:600;font-size:15px;padding:14px 34px;border-radius:9px;text-decoration:none;cursor:pointer;transition:transform .15s,background .15s}
 .btn svg{width:17px;height:17px;transition:transform .15s}
 .btn:hover svg{transform:translateX(3px)}
+.btn[download]:hover svg{transform:translateY(2px)}
 .btn.light{background:#f3f4f6;color:#0b0d12;border:1px solid #f3f4f6}
 .btn.ghost{background:transparent;color:var(--text);border:1.5px solid #4a5160}
 .btn.ghost:hover{border-color:#7a8394}
@@ -299,6 +314,7 @@ const SITE = {
     linkedin: "https://www.linkedin.com/in/anthony-stumpf",
     github: "https://github.com/Nemorous",
     medium: "https://medium.com/@smohrwz",
+    resume: "Anthony_Stumpf_Resume.pdf",
     website: "",                     // e.g. "https://yourdomain.com"
     formEndpoint: "https://formspree.io/f/mbglawap"
   },
@@ -333,15 +349,10 @@ const SITE = {
     { icon: "users", role: "President", org: "Moorpark College Cybersecurity Club", when: "",
       points: ["Led an institution-funded initiative that sent 12 students to DEF CON, covering tickets, travel, hotel, and meals.",
                "The trip has since become an annual tradition at the college."] },
-    { icon: "network", role: "Field Technician II", org: "Spectrum", when: "May 2018 – Nov 2018",
-      points: ["Installed, repaired, and maintained cable, internet, and phone services.",
-               "Resolved technical issues on site and worked with other technicians on complex problems."] },
-    { icon: "briefcase", role: "Store Manager", org: "Moldavon Inc / Pet Life", when: "Feb 2014 – May 2018",
-      points: ["Monitored security and handled incidents calmly and professionally.",
-               "Managed cash handling, bank deposits, and inventory reordering."] },
-    { icon: "monitor", role: "Computer Technician", org: "BSC Services, LLC", when: "Mar 2010 – Feb 2014",
-      points: ["Maintained computer systems, installed operating systems and software, and connected machines to networks and peripherals.",
-               "Trained users on hardware and software and provided after-hours support."] }
+    { icon: "monitor", role: "Earlier IT & Operations Roles", org: "Spectrum · Pet Life · BSC Services", when: "2010 – 2018",
+      points: ["Field Technician II, Spectrum (2018): installed and repaired cable, internet, and phone services on site.",
+               "Store Manager, Moldavon Inc / Pet Life (2014 – 2018): handled security incidents, cash, deposits, and inventory.",
+               "Computer Technician, BSC Services (2010 – 2014): maintained systems, installed operating systems and software, networked machines, and supported users after hours."] }
   ],
 
   // year: badge text, leave "" to hide it
@@ -396,10 +407,7 @@ const SITE = {
       left: ["How It Works", ["Signed agreement covering scope, rules of engagement, and confidentiality.", "Automated recon and enumeration with AI agentic tooling.", "Manual exploitation and verification to rule out false positives.", "Critical findings escalated within 24 hours.", "Full report with reproduction steps and precise remediation guidance."]],
       right: ["Case Study: LearningNuggets", ["One of three testers on a March 30 to April 6, 2026 engagement against ListenToSee's adaptive cybersecurity tutoring platform, covering its AI tutor, containerized labs, and full application and infrastructure surface.", "The report documented 10 findings: 1 Critical, 4 Medium, 1 Low, and 4 Informational. The critical issue was a Supabase row-level security misconfiguration that let any authenticated user promote themselves to administrator.", "The team also ran 16 jailbreak and prompt injection vectors against the AI tutor. All Critical and Medium findings were fixed, and the fixes were verified on April 17, 2026."]],
       quote: ["Their findings materially improved the security posture of the LearningNuggets platform before broader student deployment, and their conduct throughout was consistent with the standards I expect of senior offensive-security practitioners.", "Scott Young", "President, ListenToSee, Inc."],
-      stats: [["10", "Findings"], ["1", "Critical"], ["16", "LLM attack vectors"], ["12", "Controls validated"]] },
-    { eyebrow: "Company", title: "Knight Light Games LLC",
-      lede: "Founded in January 2019 in Thousand Oaks, California. Knight Light Games is the company behind Knight Light AI Security and Anthony's independent projects.",
-      features: [], terminal: false, left: null, right: null, quote: null, stats: [] }
+      stats: [["10", "Findings"], ["1", "Critical"], ["16", "LLM attack vectors"], ["12", "Controls validated"]] }
   ],
 
   // status: "" for published, or "Coming soon"
@@ -438,6 +446,7 @@ const P = {
   file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6Z"/><path d="M14 2v6h6M8 13h8M8 17h5"/>',
   radio:'<path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9M7.8 16.2a6 6 0 0 1 0-8.4M16.2 7.8a6 6 0 0 1 0 8.4M19.1 4.9c3.9 3.9 3.9 10.3 0 14.2"/><circle cx="12" cy="12" r="2"/>',
   book:'<path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2V4ZM22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7V4Z"/>',
+  download:'<path d="M12 3v12M7 10l5 5 5-5M4 21h16"/>',
   arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
   arrowUR:'<path d="M7 17 17 7M8 7h9v9"/>',
   chevR:'<path d="m9 6 6 6-6 6"/>', chevD:'<path d="m6 9 6 6 6-6"/>',
@@ -484,6 +493,7 @@ function homeView() {
     <div class="actions">
       <a class="btn light" href="#projects">View My Work ${ic("arrow")}</a>
       <a class="btn ghost" href="#contact">Get In Touch ${ic("arrow")}</a>
+      ${S.contact.resume ? `<a class="btn ghost" href="${esc(S.contact.resume)}" download>Download Resume ${ic("download")}</a>` : ""}
     </div>
     <div class="scroll-cue">${ic("chevD").replace("<svg", '<svg width="22" height="22"')}</div>
   </div></section>
@@ -543,6 +553,7 @@ function contactView() {
   const rows = [
     c.email && `<a href="mailto:${esc(c.email)}"><span class="icon">${ic("mail")}</span>${esc(c.email)}</a>`,
     c.linkedin && `<a ${ext(c.linkedin)}><span class="icon">${ic("linkedin")}</span>LinkedIn Profile</a>`,
+    c.resume && `<a href="${esc(c.resume)}" download><span class="icon">${ic("download")}</span>Download Resume (PDF)</a>`,
     c.github && `<a ${ext(c.github)}><span class="icon">${ic("github")}</span>GitHub: ${esc(c.github.split("/").pop())}</a>`,
     c.medium && `<a ${ext(c.medium)}><span class="icon">${ic("book")}</span>Medium Articles</a>`,
     c.website && `<a ${ext(c.website)}><span class="icon">${ic("globe")}</span>${esc(c.website.replace(/^https?:\/\//, ""))}</a>`
