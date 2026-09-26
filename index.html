@@ -295,7 +295,7 @@ const SITE = {
     ["cap", "MSCSIA, Jan 2027"]
   ],
   contact: {
-    email: "",                       // e.g. "you@example.com"
+    email: "anthonystumpf@proton.me",
     linkedin: "https://www.linkedin.com/in/anthony-stumpf",
     github: "https://github.com/Nemorous",
     medium: "https://medium.com/@smohrwz",
@@ -541,7 +541,7 @@ function homeView() {
 function contactView() {
   const c = SITE.contact;
   const rows = [
-    c.email && `<span class="c"><span class="icon">${ic("mail")}</span>${esc(c.email)}</span>`,
+    c.email && `<a href="mailto:${esc(c.email)}"><span class="icon">${ic("mail")}</span>${esc(c.email)}</a>`,
     c.linkedin && `<a ${ext(c.linkedin)}><span class="icon">${ic("linkedin")}</span>LinkedIn Profile</a>`,
     c.github && `<a ${ext(c.github)}><span class="icon">${ic("github")}</span>GitHub: ${esc(c.github.split("/").pop())}</a>`,
     c.medium && `<a ${ext(c.medium)}><span class="icon">${ic("book")}</span>Medium Articles</a>`,
