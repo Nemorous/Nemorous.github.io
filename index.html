@@ -300,7 +300,7 @@ const SITE = {
     github: "https://github.com/Nemorous",
     medium: "https://medium.com/@smohrwz",
     website: "",                     // e.g. "https://yourdomain.com"
-    formEndpoint: ""                 // e.g. a Formspree URL; leave empty to disable sending
+    formEndpoint: "https://formspree.io/f/mbglawap"
   },
   contactBlurb: "Open to penetration testing engagements, AI security work, and roles in offensive security.",
 
@@ -552,6 +552,8 @@ function contactView() {
     <div class="contact">
       <div class="card c-info"><h3>Contact Information</h3><div class="c-list">${rows}</div></div>
       <form class="card" id="contact-form" novalidate>
+        <input type="hidden" name="_subject" value="New message from your portfolio site">
+        <input type="text" name="_gotcha" id="f-gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
         <div><label for="f-first">First Name</label><input id="f-first" name="first" placeholder="Jane" required></div>
         <div><label for="f-last">Last Name</label><input id="f-last" name="last" placeholder="Doe"></div>
         <div class="full"><label for="f-email">Email Address</label><input id="f-email" name="email" type="email" placeholder="jane@example.com" required></div>
