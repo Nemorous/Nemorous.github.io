@@ -368,7 +368,7 @@ const SITE = {
                "Assessed ListenToSee's SaaS platform and uncovered a critical Supabase RLS privilege escalation, plus additional findings.",
                "Integrated AI agentic frameworks into pentest workflows for automated reconnaissance and vulnerability scanning at scale.",
                "Built client-facing tools, internal automation, and reporting infrastructure, and managed scoping, timelines, and deliverables.",
-               "Published two open-source security tools, Wordreaper and ZombieCrack, used by the security and CTF community."] },
+               "Published open-source security tools, including Wordreaper, ZombieCrack, and HashGauntlet, used by the security and CTF community."] },
     { icon: "users", role: "President", org: "WGU Cyber Club", when: "Current",
       points: ["Lead the graduate-level cybersecurity student organization, organizing events, resources, and community engagement."] },
     { icon: "users", role: "President", org: "Moorpark College Cybersecurity Club", when: "",
@@ -418,7 +418,10 @@ const SITE = {
       tags: ["Python", "Web Scraping", "Wordlists", "Open Source"] },
     { icon: "key", title: "ZombieCrack", url: "https://github.com/Nemorous/zombiecrack",
       desc: "Automated password-cracking tool built around hashcat for fast results in CTF competitions.",
-      tags: ["Hashcat", "Automation", "CTF"] }
+      tags: ["Hashcat", "Automation", "CTF"] },
+    { icon: "shield", title: "HashGauntlet", url: "https://github.com/Nemorous/hashgauntlet",
+      desc: "Active Directory credential auditing tool for blue and purple teams. Runs a domain's NTLM hashes through a staged gauntlet of attacks and reports which accounts fell, how fast, and what to remediate.",
+      tags: ["Active Directory", "Hashcat", "Blue Team"] }
   ],
 
   education: [
@@ -583,7 +586,7 @@ function homeView() {
   ${S.ncl.length ? nclView() : ""}
 
   <section id="projects"><div class="wrap">
-    ${head("Portfolio", "", "Tools &amp; Projects", "Open-source password-cracking tools built for CTF competition and used by the security community.", true)}
+    ${head("Portfolio", "", "Tools &amp; Projects", "Open-source offensive and defensive security tools built for CTF competition and real-world engagements, used by the security community.", true)}
     <div class="grid ${S.projects.length % 3 === 0 ? "g3" : "g2"}" style="${S.projects.length % 3 ? "max-width:900px;margin:0 auto" : ""}">${S.projects.map(p => `
       <${p.url ? `a ${ext(p.url)}` : "div"} class="card proj">
         <div class="top"><span class="icon blue">${ic(p.icon)}</span>${p.url ? ic("arrowUR", "arrow") : ""}</div>
