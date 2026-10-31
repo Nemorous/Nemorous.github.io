@@ -7,15 +7,15 @@
 <meta property="og:site_name" content="Anthony Stumpf">
 <meta property="og:title" content="Anthony Stumpf | Offensive Security &amp; AI">
 <meta property="og:description" content="Penetration tester, open-source tool developer, and NCL Diamond-tier CTF competitor. PenTest+, CySA+, Security+.">
-<meta property="og:url" content="https://nemorous.github.io/">
-<meta property="og:image" content="https://nemorous.github.io/og.png">
+<meta property="og:url" content="https://anthonystumpf.com/">
+<meta property="og:image" content="https://anthonystumpf.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Anthony Stumpf, Offensive Security and AI">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Anthony Stumpf | Offensive Security &amp; AI">
 <meta name="twitter:description" content="Penetration tester, open-source tool developer, and NCL Diamond-tier CTF competitor.">
-<meta name="twitter:image" content="https://nemorous.github.io/og.png">
+<meta name="twitter:image" content="https://anthonystumpf.com/og.png">
 <meta name="theme-color" content="#08090c">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -416,7 +416,7 @@ const SITE = {
     { icon: "file", title: "Wordreaper", url: "https://github.com/Nemorous/wordreaper",
       desc: "Open-source web scraper that builds targeted wordlists for password attacks. Close to 50 GitHub stars, with outside contributors and a community-driven roadmap.",
       tags: ["Python", "Web Scraping", "Wordlists", "Open Source"] },
-    { icon: "key", title: "ZombieCrack", url: "https://github.com/Nemorous",
+    { icon: "key", title: "ZombieCrack", url: "https://github.com/Nemorous/zombiecrack",
       desc: "Automated password-cracking tool built around hashcat for fast results in CTF competitions.",
       tags: ["Hashcat", "Automation", "CTF"] }
   ],
@@ -448,11 +448,15 @@ const SITE = {
       left: ["How It Works", ["Signed agreement covering scope, rules of engagement, and confidentiality.", "Automated recon and enumeration with AI agentic tooling.", "Manual exploitation and verification to rule out false positives.", "Critical findings escalated within 24 hours.", "Full report with reproduction steps and precise remediation guidance."]],
       right: ["Case Study: LearningNuggets", ["One of three testers on a March 30 to April 6, 2026 engagement against ListenToSee's adaptive cybersecurity tutoring platform, covering its AI tutor, containerized labs, and full application and infrastructure surface.", "The report documented 10 findings: 1 Critical, 4 Medium, 1 Low, and 4 Informational. The critical issue was a Supabase row-level security misconfiguration that let any authenticated user promote themselves to administrator.", "The team also ran 16 jailbreak and prompt injection vectors against the AI tutor. All Critical and Medium findings were fixed, and the fixes were verified on April 17, 2026."]],
       quote: ["Their findings materially improved the security posture of the LearningNuggets platform before broader student deployment, and their conduct throughout was consistent with the standards I expect of senior offensive-security practitioners.", "Scott Young", "President, ListenToSee, Inc."],
-      stats: [["10", "Findings"], ["1", "Critical"], ["16", "LLM attack vectors"], ["12", "Controls validated"]] }
+      stats: [["10", "Findings"], ["1", "Critical"], ["16", "LLM attack vectors"], ["12", "Controls validated"]],
+      letter: "ListenToSee_Recommendation_Redacted.pdf" }
   ],
 
   // status: "" for published, or "Coming soon"
   writeups: [
+    { cat: "Case Study", date: "September 25, 2026", status: "", title: "One Column, Full Admin: A Supabase Row-Level Security Story",
+      desc: "How one writable database column let any signed-up user self-escalate to admin, and the small policy change that closes the door. Based on a real authorized engagement, fully sanitized.",
+      url: "https://medium.com/@smohrwz/one-column-full-admin-a-supabase-row-level-security-story-e3607672bc0b" },
     { cat: "CTF", date: "November 29, 2025", status: "", title: "NCL [Hard] Password Challenge: Disney Characters and Advanced Wordreaper Techniques",
       desc: "Working through the hardest NCL password challenge with advanced Wordreaper techniques, themed wordlists, and a lot of hashcat time.",
       url: "https://medium.com/@smohrwz/ncl-hard-password-challenge-disney-characters-and-advanced-wordreaper-techniques-79e1dd1ff481" },
@@ -665,20 +669,20 @@ function venturesView() {
       <div class="venture">
         <div><span class="eyebrow">${ic("rocket")}${esc(v.eyebrow)}</span><h2>${esc(v.title)}</h2><p class="lede">${esc(v.lede)}</p>
           ${v.features.length ? `<div class="feat">${v.features.map(([i, t]) => `<div>${ic(i)}${esc(t)}</div>`).join("")}</div>` : ""}</div>
-        ${v.terminal ? `<div><div class="terminal" aria-label="Illustrative agent output"><div class="tb"><i></i><i></i><i></i></div><pre><span class="p">phantom@kali</span>:~$ phantom run --scope client.yml
+        ${v.terminal ? `<div><div class="terminal" aria-label="Illustrative agent output"><div class="tb"><i></i><i></i><i></i></div><pre><span class="p">knightlight@kali</span>:~$ phantom run --scope client.yml
 <span class="g">[+]</span> scope loaded: 3 targets, rules of engagement ok
 <span class="g">[+]</span> recon: 41 endpoints, 2 auth flows mapped
 <span class="y">[~]</span> testing access control on /rest/v1/*
 <span class="r">[!]</span> CRITICAL  RLS gap: authenticated user can
     set own role=admin via REST
 <span class="g">[+]</span> finding queued for manual verification
-<span class="p">phantom@kali</span>:~$ <span style="animation:blink 1s steps(1) infinite">█</span></pre></div><p style="margin-top:10px;font-size:13px;color:var(--dim)">Illustrative output, not a capture from a client engagement.</p></div>`
+<span class="p">knightlight@kali</span>:~$ <span style="animation:blink 1s steps(1) infinite">█</span></pre></div><p style="margin-top:10px;font-size:13px;color:var(--dim)">Illustrative output, not a capture from a client engagement.</p></div>`
           : `<div class="card" style="padding:40px;display:grid;place-items:center;color:var(--accent)">${ic("gamepad").replace("<svg", '<svg width="72" height="72"')}</div>`}
       </div>
       ${v.left ? `<div class="two"><div class="card"><h3>${esc(v.left[0])}</h3><ul>${v.left[1].map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
         <div class="card" style="background:linear-gradient(160deg,#131c2e,var(--panel))"><h3>${esc(v.right[0])}</h3>${v.right[1].map(x => `<p>${esc(x)}</p>`).join("")}</div></div>` : ""}
       ${v.stats && v.stats.length ? `<div class="vstats">${v.stats.map(([n, l]) => `<div class="card"><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join("")}</div>` : ""}
-      ${v.quote ? `<figure class="card quote"><blockquote>${esc(v.quote[0])}</blockquote><figcaption><b>${esc(v.quote[1])}</b><span>${esc(v.quote[2])}</span></figcaption></figure>` : ""}
+      ${v.quote ? `<figure class="card quote"><blockquote>${esc(v.quote[0])}</blockquote><figcaption><b>${esc(v.quote[1])}</b><span>${esc(v.quote[2])}</span></figcaption>${v.letter ? `<a class="letter-dl" href="${esc(v.letter)}" target="_blank" rel="noopener">${ic("file")}Recommendation letter (redacted) ${ic("arrowUR")}</a>` : ""}</figure>` : ""}
     </div>`).join('<div style="height:96px"></div>')}</div></section>
     <style>@keyframes blink{50%{opacity:0}}</style>`;
 }
